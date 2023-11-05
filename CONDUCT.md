@@ -1,39 +1,41 @@
-# Code Conduct for Electron-React Boilerplate Project
+# Organization-Wide Code of Conduct
 
 ## Introduction
 
-The Electron-React Boilerplate Project serves as a robust starting point for developers looking to build Electron-React applications with a standardized and streamlined setup. This Code Conduct outlines the guidelines and best practices that contributors should adhere to, ensuring the project maintains its quality, consistency, and ease of use.
+This Code of Conduct provides guidelines for all members and contributors within the ElectronReactJS organization. Our goal is to maintain a cohesive, respectful, and collaborative environment across all our projects, particularly those combining Electron and React technologies.
 
-## Guidelines
+## Contribution Guidelines
 
 ### Commit Messages
 
-Crafting meaningful and standardized commit messages is crucial for maintaining a clean and understandable Git history. Please refer to [COMMIT.md](COMMIT.md) for guidelines on structuring your commit messages. This practice aligns with our goal of ensuring consistency and clarity in our version control history.
+Clear and structured commit messages are essential for a transparent Git history. Refer to the organization-level [COMMIT_GUIDELINES.md](COMMIT_GUIDELINES.md) for our commit message conventions.
 
-### Configuration Files
+### Configuration Standards
 
-Configuration files like `.env`, `.gitconfig`, and `.editorConfig` are pivotal for customizing the development environment. For more details on these configurations, see [CONFIGURATION.md](CONFIGURATION.md). This practice supports our aim of providing a standardized coding environment across different setups.
+Consistency in configuration files like `.env`, `.gitconfig`, and `.editorconfig` ensures a seamless development environment. Detailed standards are available in [CONFIGURATION_GUIDELINES.md](CONFIGURATION_GUIDELINES.md).
 
 ### Dependency Management
 
-Managing dependencies in a way that retains the project's OS-agnostic nature is essential. For guidelines on dependency management, please refer to [DEPENDENCY.md](DEPENDENCY.md). This aligns with our objective of maintaining a project setup that is flexible across different operating systems.
+Our projects aim to be OS-agnostic. Guidelines for managing dependencies without compromising this principle can be found in [DEPENDENCY_GUIDELINES.md](DEPENDENCY_GUIDELINES.md).
 
 ### Error Handling
 
-Effective error handling enhances the diagnostic process and overall project contribution experience. For guidelines on error handling, see [ERROR.md](ERROR.md). This practice ensures a user-friendly and developer-friendly experience within the project.
+A structured approach to error handling is critical for a developer-friendly environment. Our practices are documented in [ERROR_HANDLING_GUIDELINES.md](ERROR_HANDLING_GUIDELINES.md).
 
-### Variable Naming
+### Naming Conventions
 
-Consistent and descriptive variable naming significantly contributes to code readability and maintainability. For more details on variable naming conventions, see [VARIABLE.md](VARIABLE.md). This practice supports our goal of ensuring an efficient and versatile development process.
+To maintain code readability and maintainability, we follow specific variable naming conventions detailed in [NAMING_CONVENTIONS.md](NAMING_CONVENTIONS.md).
 
-## Conclusion
+## Adherence
 
-By adhering to the guidelines outlined in this Code Conduct, contributors play a vital role in achieving the goals of the Electron-React Boilerplate Project—accelerating the setup process, ensuring a standardized development environment, and promoting a high level of code quality.
+Contributors are expected to adhere to these guidelines to ensure the ElectronReactJS organization's repositories remain high-quality, efficient, and accessible.
 
 ## References
 
-- [COMMIT.md](COMMIT.md)
-- [CONFIGURATION.md](CONFIGURATION.md)
-- [DEPENDENCY.md](DEPENDENCY.md)
-- [ERROR.md](ERROR.md)
-- [VARIABLE.md](VARIABLE.md)
+- [Commit Message Guidelines](COMMIT_GUIDELINES.md)
+- [Configuration Standards](CONFIGURATION_GUIDELINES.md)
+- [Dependency Management Guidelines](DEPENDENCY_GUIDELINES.md)
+- [Error Handling Guidelines](ERROR_HANDLING_GUIDELINES.md)
+- [Naming Conventions](NAMING_CONVENTIONS.md)
+
+By following these guidelines, we foster a culture of excellence and collaboration within our community.
