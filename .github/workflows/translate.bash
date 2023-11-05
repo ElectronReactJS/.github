@@ -77,6 +77,10 @@ if [ $? -ne 0 ]; then
 fi
 
 echo $TRANSLATED_CONTENT > "PTBR_${INPUT_FILE}"
+
+git config user.email "${{ github.actor }}@users.noreply.github.com"
+git config user.name "${{ github.actor }}"
+
 git add .
 git commit -m "feat: Added PTBR_${INPUT_FILE}"
 git push
