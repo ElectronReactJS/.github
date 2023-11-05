@@ -2,7 +2,15 @@
 
 ## Introduction
 
-This Code of Conduct provides guidelines for all members and contributors within the ElectronReactJS organization. Our goal is to maintain a cohesive, respectful, and collaborative environment across all our projects, particularly those combining Electron and React technologies.
+This Code of Conduct provides guidelines for all members and contributors within the ElectronReactJS organization. Our goal is to maintain a cohesive, respectful, and collaborative environment across all our projects, particularly those combining Electron and React technologies. 
+
+## Automatic Translation
+
+This project utilizes the [GPT Translate](https://github.com/3ru/gpt-translate) GitHub action to automatically translate Markdown files from English to Brazilian Portuguese upon each push to the main branch. 
+
+### How It Works
+
+Upon each push to the `main` branch, the GPT Translate action is triggered to translate all Markdown (`.md`) files in the current directory to Brazilian Portuguese. The translated files are then saved with the `_PT_BR.md` suffix, making the content accessible in both English and Portuguese.
 
 ## Contribution Guidelines
 
