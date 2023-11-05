@@ -72,6 +72,8 @@ if [ $? -ne 0 ]; then
     exit 8
 fi
 
+echo "$API_RESPONSE"
+
 # Extract the commit message from the API response
 TRANSLATED_CONTENT=$(echo "$API_RESPONSE" | jq -r '.choices[0].message.content')
 # Check if the last command was successful
