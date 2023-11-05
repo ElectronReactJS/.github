@@ -77,7 +77,9 @@ fi
 echo "$API_RESPONSE"
 
 # Extract the commit message from the API response
-TRANSLATED_CONTENT=$(echo "$API_RESPONSE" | jq -r '.choices[0].message.content')
+# TRANSLATED_CONTENT=$(echo "$API_RESPONSE" | jq -r '.choices[0].message.content')
+TRANSLATED_CONTENT=$(echo "$API_RESPONSE" | jq -r '.choices[0].message.content' | sed -e 's/^.*a seguinte: //' -e 's/\\n/\n/g')
+
 # Check if the last command was successful
 if [ $? -ne 0 ]; then
     echo "Error: Failed to parse API response."
