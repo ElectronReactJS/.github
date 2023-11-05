@@ -5,10 +5,26 @@
 # Description: Treanslates the input file content.
 # Dependencies: curl, jq, openssl
 
-
 PREF_LANGUAGE="Brazilian Portuguese"
 OPENAI_SYSTEM_CONTENT="You are a helpful system programmed to generate a translated version based on the input. Please provide the translation without any comments or suggestions, in the prefered language."
 OPENAI_USER_CONTENT="Based on the following input, identify the language and translate to ${PREF_LANGUAGE}."
+
+API_KEY="$1"
+# Check for required files and variables
+if [ -z "$API_KEY" ]; then
+    echo "Error: Required variable API_KEY is not set in this bash file."
+    echo "User Task: Update this bash file with the missing variables."
+    exit 7
+fi
+
+INPUT_FILE="$2"
+echo "Received: $INPUT_FILE"
+# Check for required files and variables
+if [ -z "$INPUT_FILE" ]; then
+    echo "Error: Required variable INPUT_FILE is not set in this bash file."
+    echo "User Task: Update this bash file with the missing variables."
+    exit 7
+fi
 
 # Check for curl
 if ! command -v curl &> /dev/null; then
@@ -27,16 +43,10 @@ fi
 # Check for required files and variables
 if [ -z "$PREF_LANGUAGE" ] || [ -z "$OPENAI_SYSTEM_CONTENT" ] || [ -z "$OPENAI_USER_CONTENT" ]; then
     echo "Error: Required variables not set in this bash file."
-    echo "Reason: Missing PASSPHRASE, PREF_LANGUAGE, OPENAI_SYSTEM_CONTENT, or OPENAI_USER_CONTENT."
+    echo "Reason: Missing PREF_LANGUAGE, OPENAI_SYSTEM_CONTENT, or OPENAI_USER_CONTENT."
     echo "User Task: Update this bash file with the missing variables."
     exit 7
 fi
-
-# Decrypt API Key
-API_KEY="$1"
-
-INPUT_FILE="$2"
-echo "Received: $INPUT_FILE"
 
 INPUT_CONTENT=$(cat "$INPUT_FILE")
 
@@ -52,37 +62,58 @@ API_RESPONSE=$(curl -s -H "Authorization: Bearer $API_KEY" \
     -H "Content-Type: application/json" \
     -d "$JSON_PAYLOAD" \
     "https://api.openai.com/v1/chat/completions")
-
-# Check if curl command was successful
+# Check if the last command was successful
 if [ $? -ne 0 ]; then
     echo "Error: API call to ChatGPT failed."
     echo "Reason: The curl command did not execute successfully."
     echo "Developer Fix: If you believe this is a bug, please contribute by opening an issue on the GitHub repository."
     echo "Support: If you have a support contract, please contact support with error code 8."
-    echo "Community Help: For community assistance, post your issue on Stack Overflow with the tag 'auto-commit-msg'."
+    echo "Community Help: For community assistance, post your issue on Stack Overflow with the tag 'translate.bash'."
     exit 8
 fi
 
 # Extract the commit message from the API response
 TRANSLATED_CONTENT=$(echo "$API_RESPONSE" | jq -r '.choices[0].message.content')
-
-# Check if jq command was successful
+# Check if the last command was successful
 if [ $? -ne 0 ]; then
     echo "Error: Failed to parse API response."
     echo "Reason: The jq command did not execute successfully."
     echo "Developer Fix: If you believe this is a bug, please contribute by opening an issue on the GitHub repository."
     echo "Support: If you have a support contract, please contact support with error code 9."
-    echo "Community Help: For community assistance, post your issue on Stack Overflow with the tag 'auto-commit-msg'."
+    echo "Community Help: For community assistance, post your issue on Stack Overflow with the tag 'translate.bash'."
     exit 9
 fi
 
 echo $TRANSLATED_CONTENT > "$(dirname $INPUT_FILE)/PTBR_$(basename $INPUT_FILE)"
-
-git config user.email "${{ github.actor }}@users.noreply.github.com"
-git config user.name "${{ github.actor }}"
+# Check if the last command was successful
+if [ $? -ne 0 ]; then
+    echo "Error: Failed to write $(dirname $INPUT_FILE)/PTBR_$(basename $INPUT_FILE)."
+    echo "Developer Fix: If you believe this is a bug, please contribute by opening an issue on the GitHub repository."
+    echo "Support: If you have a support contract, please contact support with error code 9."
+    echo "Community Help: For community assistance, post your issue on Stack Overflow with the tag 'translate.bash'."
+    exit 9
+fi
 
 git add .
-git commit -m "feat: Added PTBR_${INPUT_FILE}"
+# Check if the last command was successful
+if [ $? -ne 0 ]; then
+    echo "Error: Failed to 'git add . '."
+    echo "Developer Fix: If you believe this is a bug, please contribute by opening an issue on the GitHub repository."
+    echo "Support: If you have a support contract, please contact support with error code 9."
+    echo "Community Help: For community assistance, post your issue on Stack Overflow with the tag 'translate.bash'."
+    exit 9
+fi
+
+git commit -m "feat: Added or updated $(dirname $INPUT_FILE)/PTBR_$(basename $INPUT_FILE)"
+# Check if the last command was successful
+if [ $? -ne 0 ]; then
+    echo "Error: Failed to commit $(dirname $INPUT_FILE)/PTBR_$(basename $INPUT_FILE)."
+    echo "Developer Fix: If you believe this is a bug, please contribute by opening an issue on the GitHub repository."
+    echo "Support: If you have a support contract, please contact support with error code 9."
+    echo "Community Help: For community assistance, post your issue on Stack Overflow with the tag 'translate.bash'."
+    exit 9
+fi
+
 git push
 
 exit 0

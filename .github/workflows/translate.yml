@@ -7,11 +7,20 @@ on:
   # Triggers the workflow on push or pull request events but only for the $default-branch branch
   push:
     branches: [ $default-branch ]
+    paths:
+      - '**.md'
   pull_request:
     branches: [ $default-branch ]
+    types: [opened, reopened, synchronize]
+    paths:
+      - '**.md'
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -33,6 +42,15 @@ jobs:
         run: |
           ls ${{ github.workspace }}
       - run: echo "🍏 This job's status is ${{ job.status }}."
-      # Runs a single command using the runners shell
+      - name: Set Git Config
+        run: |
+          git config user.email "${{ github.actor }}@users.noreply.github.com"
+          git config user.name "${{ github.actor }}"
       - name: Run .github/workflows/translate.bash script
+        shell: bash
         run: .github/workflows/translate.bash ${{ secrets.ELECTRONREACTJS_OPENAI_KEY }} profile/README.md
+      - name: Upload
+        uses: actions/upload-artifact@v3
+        with:
+          name: Markdown files
+          path: '**PTBR_**.md'
