@@ -57,6 +57,8 @@ JSON_PAYLOAD=$(jq -n \
                   --arg user_content "$OPENAI_USER_CONTENT: $INPUT_CONTENT" \
                   '{model: $model, messages: [{role: "system", content: $sys_content}, {role: "user", content: $user_content}]}')
 
+echo "$JSON_PAYLOAD"
+
 # Make an API call to ChatGPT for analysis
 API_RESPONSE=$(curl -s -H "Authorization: Bearer $API_KEY" \
     -H "Content-Type: application/json" \
