@@ -1,4 +1,4 @@
-name: Translate Markdown
+name: GPT Translate
 
 on:
   push:
@@ -6,18 +6,16 @@ on:
       - main
 
 jobs:
-  translate:
+  gpt_translate:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
-      - name: Translate Markdown files
-        uses: 3ru/gpt-translate@main  # Assume que gpt-translate suporta tradução diretamente
+      - name: Run GPT Translate
+        uses: 3ru/gpt-translate@v1.1.8
         with:
-          input_filepath: '*.md'  # Este é um exemplo, você precisará especificar o caminho correto
-          output_filepath: '*_PT_BR.md'  # Este é um exemplo, você precisará especificar o caminho correto
-          target_language: 'pt-BR'
-          openai_api_key: ${{ secrets.OPENAI_API_KEY }}  # Supondo que você tenha configurado sua chave API como um segredo do repositório
-
+          apikey: ${{ secrets.OPENAI_API_KEY }}
+          input_filepath: '*.md'
+          output_filepath: '*_PT_BR.md'
+          target_language: 'Portuguese'
