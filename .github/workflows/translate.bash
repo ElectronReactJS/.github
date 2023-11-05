@@ -77,7 +77,6 @@ fi
 echo "$API_RESPONSE"
 
 # Extract the commit message from the API response
-# TRANSLATED_CONTENT=$(echo "$API_RESPONSE" | jq -r '.choices[0].message.content')
 TRANSLATED_CONTENT=$(echo "$API_RESPONSE" | jq -r '.choices[0].message.content' | sed -e 's/^.*a seguinte: //' -e 's/\\n/\n/g')
 
 # Check if the last command was successful
@@ -90,7 +89,7 @@ if [ $? -ne 0 ]; then
     exit 9
 fi
 
-echo $TRANSLATED_CONTENT > "$(dirname $INPUT_FILE)/PTBR_$(basename $INPUT_FILE)"
+echo -e "$TRANSLATED_CONTENT" > "$(dirname $INPUT_FILE)/PTBR_$(basename $INPUT_FILE)"
 # Check if the last command was successful
 if [ $? -ne 0 ]; then
     echo "Error: Failed to write $(dirname $INPUT_FILE)/PTBR_$(basename $INPUT_FILE)."
