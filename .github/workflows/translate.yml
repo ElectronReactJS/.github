@@ -17,6 +17,6 @@ jobs:
         with:
           apikey: ${{ secrets.ELECTRONREACTJS_OPENAI_KEY }}
           basePath: '.'
-          inputFiles: '*.md'
+          inputFiles: 'README.md'
           outputFiles: '*_PT_BR.md'
           languages: 'Portuguese'
