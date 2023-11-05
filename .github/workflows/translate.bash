@@ -76,7 +76,7 @@ if [ $? -ne 0 ]; then
     exit 9
 fi
 
-echo $TRANSLATED_CONTENT > "PTBR_${INPUT_FILE}"
+echo $TRANSLATED_CONTENT > "$(dirname $INPUT_FILE)/PTBR_$(basename $INPUT_FILE)"
 
 git config user.email "${{ github.actor }}@users.noreply.github.com"
 git config user.name "${{ github.actor }}"
