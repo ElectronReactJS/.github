@@ -1,6 +1,6 @@
 # Welcome to ElectronReactJS
 
-!(electron-react-logo.png)[https://github.com/ElectronReactJS/.github/blob/01bc8e0e7c3a0afad39941da47af052b2eda2588/profile/electron-react-logo.png]
+![https://github.com/ElectronReactJS/.github/blob/01bc8e0e7c3a0afad39941da47af052b2eda2588/profile/electron-react-logo.png](https://github.com/ElectronReactJS/.github/blob/01bc8e0e7c3a0afad39941da47af052b2eda2588/profile/electron-react-logo.png)
 
 Welcome to the official GitHub organization for the ElectronReactJS community. We are a dedicated hub for open-source projects that synergize the power of [Electron](https://www.electronjs.org/) and [React](https://reactjs.org/). Our mission is to foster a collaborative environment where developers can share, contribute, and build superior desktop applications using web technologies.
 
