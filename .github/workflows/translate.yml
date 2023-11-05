@@ -41,6 +41,8 @@ jobs:
       - name: List changed files
         run: |
           echo "Changed files: $(git diff --name-only HEAD~1 HEAD)"
+          echo "Changed files: $(git diff --name-only HEAD^ HEAD)"
+          echo "Changed files: $(git diff --name-only HEAD~ HEAD)"
       - name: Run .github/workflows/translate.bash script
         shell: bash
         run: .github/workflows/translate.bash ${{ secrets.ELECTRONREACTJS_OPENAI_KEY }} profile/README.md
