@@ -16,6 +16,6 @@ jobs:
         uses: 3ru/gpt-translate@v1.1.8
         with:
           apikey: ${{ secrets.ELECTRONREACTJS_OPENAI_KEY }}
-          input_filepath: '*.md'
-          output_filepath: '*_PT_BR.md'
+          input_filepath: '**/*.md'
+          output_filepath: '**/*_PT_BR.md'
           target_language: 'Portuguese'
