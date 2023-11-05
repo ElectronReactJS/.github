@@ -1,7 +1,7 @@
 name: OpenAI Translate
 
 
-run-name: ${{ github.actor }} is running out GitHub Actions 🚀
+run-name: ${{ github.actor }} is running out GitHub Actions for translating 🚀
 
 # Controls when the workflow will run
 on:
