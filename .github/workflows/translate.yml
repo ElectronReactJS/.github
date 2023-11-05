@@ -49,8 +49,3 @@ jobs:
       - name: Run .github/workflows/translate.bash script
         shell: bash
         run: .github/workflows/translate.bash ${{ secrets.ELECTRONREACTJS_OPENAI_KEY }} profile/README.md
-      - name: Upload
-        uses: actions/upload-artifact@v3
-        with:
-          name: Markdown files
-          path: '**PTBR_**.md'
