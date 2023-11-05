@@ -6,8 +6,8 @@
 # Dependencies: curl, jq, openssl
 
 PREF_LANGUAGE="Brazilian Portuguese"
-OPENAI_SYSTEM_CONTENT="You are a helpful system programmed to generate a translated version based on the input. Please provide the translation without any comments or suggestions, in the prefered language."
-OPENAI_USER_CONTENT="Based on the following input, identify the language and translate to ${PREF_LANGUAGE}."
+OPENAI_SYSTEM_CONTENT="You are a helpful system programmed to generate a translated version based on the markdown content inputed. Please provide the translation without any comments or suggestions, in the prefered language, ready to be applied to the repository."
+OPENAI_USER_CONTENT="Based on the following input, identify the language and translate to ${PREF_LANGUAGE}. The answer should contain the translated content, only."
 
 API_KEY="$1"
 # Check for required files and variables
