@@ -57,8 +57,6 @@ JSON_PAYLOAD=$(jq -n \
                   --arg user_content "$OPENAI_USER_CONTENT: $INPUT_CONTENT" \
                   '{model: $model, messages: [{role: "system", content: $sys_content}, {role: "user", content: $user_content}]}')
 
-echo "$JSON_PAYLOAD"
-
 # Make an API call to ChatGPT for analysis
 API_RESPONSE=$(curl -s -H "Authorization: Bearer $API_KEY" \
     -H "Content-Type: application/json" \
@@ -73,8 +71,6 @@ if [ $? -ne 0 ]; then
     echo "Community Help: For community assistance, post your issue on Stack Overflow with the tag 'translate.bash'."
     exit 8
 fi
-
-echo "$API_RESPONSE"
 
 # Extract the commit message from the API response
 TRANSLATED_CONTENT=$(echo "$API_RESPONSE" | jq -r '.choices[0].message.content' | sed -e 's/^.*a seguinte: //' -e 's/\\n/\n/g')
