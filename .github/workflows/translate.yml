@@ -28,4 +28,4 @@ jobs:
 
       # Runs a single command using the runners shell
       - name: Run a one-line script
-        run: .github/workflows/translate.bash "${{ secrets.ELECTRONREACTJS_OPENAI_KEY }}" "README.md"
+        run: .github/workflows/translate.bash "${{ secrets.ELECTRONREACTJS_OPENAI_KEY }}" "profile/README.md"
