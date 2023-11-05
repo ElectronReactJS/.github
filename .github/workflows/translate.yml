@@ -15,7 +15,7 @@ jobs:
       - name: Run GPT Translate
         uses: 3ru/gpt-translate@v1.1.8
         with:
-          apikey: ${{ secrets.OPENAI_API_KEY }}
+          apikey: ${{ secrets.ELECTRONREACTJS_OPENAI_KEY }}
           input_filepath: '*.md'
           output_filepath: '*_PT_BR.md'
           target_language: 'Portuguese'
