@@ -109,7 +109,7 @@ if [ $? -ne 0 ]; then
 fi
 
 # Extract the commit message from the API response
-DESCRIPTION=$(echo "$API_FROM_DIFF_OUTPUT_RESPONSE" | jq -r '.choices[0].message.content')
+BODY=$(echo "$API_FROM_DIFF_OUTPUT_RESPONSE" | jq -r '.choices[0].message.content')
 # Check if jp command was successful
 if [ $? -ne 0 ]; then
     echo "Error: JP parsing failed."
@@ -121,10 +121,10 @@ if [ $? -ne 0 ]; then
 fi
 
 # Define system context with specific instructions for emoji usage and commit message format
-OPENAI_SYSTEM_CONTENT="Format the commit message with maximun of 50 characters, based on the user content."
+SYSTEM_CONTENT="Format the commit message with maximun of 50 characters, based on the user content."
 
 # Define user task with clear instructions on commit message structure and emoji inclusion
-OPENAI_USER_CONTENT="Create a commit message with the following structure <TYPE> (<SCOPE> <EMOJI>): <SUBJECT> \
+USER_CONTENT="Create a commit message with the following structure <TYPE> (<SCOPE> <EMOJI>): <SUBJECT> \
 - The <TYPE>, then a (<SCOPE> <EMOJI>) between parenteses, then a double point ':', then a space and finally, the subject. \
   * Example as it is manually: git commit -m 'MINOR(🎨 style): footer size increased'.  \
 - The <TYPE> can be (MAJOR|MINOR|PATCH) following the Semantic Versioning Specification (SemVer). \
@@ -135,18 +135,18 @@ OPENAI_USER_CONTENT="Create a commit message with the following structure <TYPE>
   SCOPE list: core 🧱, elements 🔍, http 🌐, language-service 🈳, platform-browser 🌍, platform-browserdynamic 🌎, platform-server 🖥️, platform-webworker 👷, platform-webworker-dynamic, router 🧭, service-worker 👷‍♂️, upgrade ⬆️. \
 - The <SUBJECT>: Imperative mood, lowercase subject, without ending period." 
 
-# Prepare the JSON payload using jq, incorporating the DESCRIPTION
-JSON_DESCRIPTION_PAYLOAD=$(jq -n \
+# Prepare the JSON payload using jq, incorporating the BODY
+JSON_PAYLOAD=$(jq -n \
                   --arg model "gpt-3.5-turbo-16k" \
-                  --arg sys_content "$OPENAI_SYSTEM_CONTENT" \
-                  --arg user_content "$OPENAI_USER_CONTENT" \
-                  --arg user_content "$DESCRIPTION" \
+                  --arg sys_content "$SYSTEM_CONTENT" \
+                  --arg user_content "$USER_CONTENT" \
+                  --arg user_content "$BODY" \
                   '{model: $model, messages: [{role: "system", content: $sys_content}, {role: "user", content: $user_content}, {role: "user", content: $description}]}')
 
 # Make an API call to ChatGPT for analysis
-API_FROM_DESCRIPTION_RESPONSE=$(curl -s -H "Authorization: Bearer $API_KEY" \
+API_RESPONSE=$(curl -s -H "Authorization: Bearer $API_KEY" \
     -H "Content-Type: application/json" \
-    -d "$JSON_DESCRIPTION_PAYLOAD" \
+    -d "$JSON_PAYLOAD" \
     "https://api.openai.com/v1/chat/completions")
 
 # Check if curl command was successful
@@ -160,7 +160,7 @@ if [ $? -ne 0 ]; then
 fi
 
 # Extract the commit message from the API response
-SUGGESTION=$(echo "$API_FROM_DESCRIPTION_RESPONSE" | jq -r '.choices[0].message.content')
+TITLE=$(echo "$API_RESPONSE" | jq -r '.choices[0].message.content')
 
 # Check if jq command was successful
 if [ $? -ne 0 ]; then
@@ -173,8 +173,8 @@ if [ $? -ne 0 ]; then
 fi
 
 # Update the commit message
-echo -e "$SUGGESTION" > "commit-message.txt"
-echo -e "$DESCRIPTION" >> "commit-message.txt"
+echo -e "$TITLE" > "commit-message.txt"
+echo -e "$BODY" >> "commit-message.txt"
 git commit -F "commit-message.txt"
 rm -f "commit-message.txt"
 git fetch && git pull
