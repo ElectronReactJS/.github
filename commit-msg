@@ -109,13 +109,17 @@ if [ $? -ne 0 ]; then
 fi
 
 # Extract the commit message from the API response
-DESCRIPTION_4096_SUGGESTION=$(echo "$API_FROM_DIFF_OUTPUT_RESPONSE" | jq -r '.choices[0].message.content')
+DESCRIPTION=$(echo "$API_FROM_DIFF_OUTPUT_RESPONSE" | jq -r '.choices[0].message.content')
 
-# Define system context
-OPENAI_SYSTEM_CONTENT="The AI should format commit messages according to the Conventional Commits specification and Semantic Versioning. It should identify the type of change (fix, feat, BREAKING CHANGE, etc.), prepend the appropriate emoji, and ensure the message includes a header, body, and footer as required. The formatted message should adhere to the commit message guidelines for readability and structure."
+# Define system context with specific instructions for emoji usage
+OPENAI_SYSTEM_CONTENT="The AI is tasked to format commit messages following the Conventional Commits specification with Semantic Versioning. The message must include a corresponding emoji for the commit type at the beginning of the header. The AI should ensure the message includes a type, scope, subject, body, and footer as needed, conforming to commit message guidelines and character limitations."
 
-# Define user task with the placeholder for the description output
-OPENAI_USER_CONTENT="Format the provided commit message. Prepend the correct emoji based on the commit type: 🐛 for 'fix:', ✨ for 'feat:', 💥 for 'BREAKING CHANGE:', 🏗️ for 'build:', 🤖 for 'ci:', 📚 for 'docs:', 🎨 for 'style:', 🚀 for 'perf:', 🔨 for 'refactor:', and 🧪 for 'test:'. The commit message should follow the structure: <type>(<scope>): <subject> with a mandatory header and optional scope and footer. Ensure the message is within 100 characters per line."
+# Define user task with clear instructions on commit message structure and emoji inclusion
+OPENAI_USER_CONTENT="Please format the provided commit message according to the following rules: 
+1. Prepend the correct emoji based on the commit type: 🐛 for 'fix:', ✨ for 'feat:', 💥 for 'BREAKING CHANGE:', 🏗️ for 'build:', 🤖 for 'ci:', 📚 for 'docs:', 🎨 for 'style:', 🚀 for 'perf:', 🔨 for 'refactor:', 🧪 for 'test:'. 
+2. Use the structure: <type>(<scope>): <subject> with a mandatory header and optional scope and footer. 
+3. Wrap the message at 100 characters per line.
+Here's the commit description: $DESCRIPTION"
 
 # Prepare the JSON payload using jq, incorporating the DESCRIPTION
 JSON_DESCRIPTION_PAYLOAD=$(jq -n \
@@ -142,7 +146,7 @@ if [ $? -ne 0 ]; then
 fi
 
 # Extract the commit message from the API response
-DESCRIPTON_4096_SUGGESTION=$(echo "$API_FROM_DIFF_OUTPUT_RESPONSE" | jq -r '.choices[0].message.content')
+SUGGESTION=$(echo "$API_FROM_DIFF_OUTPUT_RESPONSE" | jq -r '.choices[0].message.content')
 
 # Check if jq command was successful
 if [ $? -ne 0 ]; then
@@ -155,7 +159,7 @@ if [ $? -ne 0 ]; then
 fi
 
 # Update the commit message
-echo $DESCRIPTON_4096_SUGGESTION > "commit-message.txt"
+echo $SUGGESTION > "commit-message.txt"
 git commit -F "commit-message.txt"
 rm -f "commit-message.txt"
 git fetch && git pull
