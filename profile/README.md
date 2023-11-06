@@ -1,4 +1,5 @@
 [Tradução para Português 🇧🇷](profile/PTBR_README.md)
+[Tradução para Português 🇧🇷](profile/PTBR_README.md)
 # Welcome to ElectronReactJS
 
 ![profile/electron-react-logo.png](profile/electron-react-logo.png)
