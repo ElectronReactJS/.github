@@ -162,7 +162,7 @@ if [ $? -ne 0 ]; then
 fi
 
 # Update the commit message
-echo $SUGGESTION > "commit-message.txt"
+echo -e "$SUGGESTION" > "commit-message.txt"
 git commit -F "commit-message.txt"
 rm -f "commit-message.txt"
 git fetch && git pull
