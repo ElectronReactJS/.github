@@ -121,7 +121,7 @@ if [ $? -ne 0 ]; then
 fi
 
 # Define system context with specific instructions for emoji usage and commit message format
-OPENAI_SYSTEM_CONTENT="Format the commit message with maximun of 50 characters, based on the following description: ${DESCRIPTION}"
+OPENAI_SYSTEM_CONTENT="Format the commit message with maximun of 50 characters, based on the user content."
 
 # Define user task with clear instructions on commit message structure and emoji inclusion
 OPENAI_USER_CONTENT="Create a commit message with the following structure <TYPE> (<SCOPE> <EMOJI>): <SUBJECT> \
@@ -140,6 +140,7 @@ JSON_DESCRIPTION_PAYLOAD=$(jq -n \
                   --arg model "gpt-3.5-turbo-16k" \
                   --arg sys_content "$OPENAI_SYSTEM_CONTENT" \
                   --arg user_content "$OPENAI_USER_CONTENT" \
+                  --arg user_content "$DESCRIPTION" \
                   '{model: $model, messages: [{role: "system", content: $sys_content}, {role: "user", content: $user_content}, {role: "user", content: $description}]}')
 
 # Make an API call to ChatGPT for analysis
