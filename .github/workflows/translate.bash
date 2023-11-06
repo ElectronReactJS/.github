@@ -125,7 +125,7 @@ if [ $? -ne 0 ]; then
     exit 9
 fi
 
-git commit -m "feat: auto translation"
+git commit -m "feat: auto translation 🇧🇷"
 # Check if the last command was successful
 if [ $? -ne 0 ]; then
     echo "Error: Failed to commit $(dirname $INPUT_FILE)/PTBR_$(basename $INPUT_FILE)."
