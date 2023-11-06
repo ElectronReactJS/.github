@@ -112,16 +112,17 @@ fi
 DESCRIPTION=$(echo "$API_FROM_DIFF_OUTPUT_RESPONSE" | jq -r '.choices[0].message.content')
 
 # Define system context with specific instructions for emoji usage and commit message format
-OPENAI_SYSTEM_CONTENT="Format the commit message according to the Conventional Commits specification with Semantic Versioning. Include the appropriate emoji at the start of the header. Ensure the message has a header with a type and subject, an optional scope, a body, and a footer. Each line should be wrapped at 100 characters."
+OPENAI_SYSTEM_CONTENT="Format the commit message to follow Conventional Commits and Semantic Versioning. Start the header with an emoji that matches the commit type. The header must include a type, scope (optional), and a short description, followed by a body and a footer if necessary. Wrap lines at 100 characters."
 
 # Define user task with clear instructions on commit message structure and emoji inclusion
-OPENAI_USER_CONTENT="The commit message must be formatted as follows:
-1. Start with the header, which includes the type and a concise subject. Include an emoji based on the type: 🐛 for 'fix:', ✨ for 'feat:', etc.
-2. The scope is optional and, if present, should be enclosed in parentheses after the type.
-3. After the header, leave a blank line before the body.
-4. After the body, leave a blank line before the footer.
-5. Ensure no line exceeds 100 characters.
-Please format the following description into a proper commit message: $DESCRIPTION"
+OPENAI_USER_CONTENT="Create a commit message with the following structure and details:
+- Header with type and subject, including an emoji: fix (🐛), feat (✨), BREAKING CHANGE (💥), build (🏗️), ci (🤖), docs (📚), style (🎨), perf (🚀), refactor (🔨), test (🧪).
+- Optional scope in parentheses.
+- Imperative mood, lowercase subject, without ending period.
+- Body explaining the 'why' and 'what' of the changes.
+- Footer with BREAKING CHANGE notice or issue references.
+Message example: feat(parser): add array parsing support
+Consider the following changes for formatting: $DESCRIPTION"
 
 # Prepare the JSON payload using jq, incorporating the DESCRIPTION
 JSON_DESCRIPTION_PAYLOAD=$(jq -n \
