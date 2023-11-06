@@ -11,10 +11,6 @@
       ],
       "options": {
         "cwd": "${workspaceFolder}"
-      },
-      "problemMatcher": [],
-      "presentation": {
-        "panel": "new"
       }
     }
   ]
