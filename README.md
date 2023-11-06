@@ -38,3 +38,6 @@ We value your feedback and support. If you have any questions or issues, feel fr
 
 Thank you for visiting the ElectronReactJS organization!
 
+---
+
+- Author: Ricardo Malnati

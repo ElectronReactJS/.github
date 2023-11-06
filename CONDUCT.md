@@ -47,3 +47,7 @@ Contributors are expected to adhere to these guidelines to ensure the ElectronRe
 - [Naming Conventions](NAMING_CONVENTIONS.md)
 
 By following these guidelines, we foster a culture of excellence and collaboration within our community.
+
+---
+
+- Author: Ricardo Malnati

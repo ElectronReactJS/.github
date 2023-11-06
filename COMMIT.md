@@ -11,3 +11,7 @@
 ## References
 - [Conventional Commits](https://www.conventionalcommits.org/)
 - [Semantic Versioning](https://semver.org/)
+
+---
+
+- Author: Ricardo Malnati
