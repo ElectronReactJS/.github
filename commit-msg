@@ -160,7 +160,7 @@ if [ $? -ne 0 ]; then
 fi
 
 # Extract the commit message from the API response
-SUGGESTION=$(echo "$API_FROM_DIFF_OUTPUT_RESPONSE" | jq -r '.choices[0].message.content')
+SUGGESTION=$(echo "$API_FROM_DESCRIPTION_RESPONSE" | jq -r '.choices[0].message.content')
 
 # Check if jq command was successful
 if [ $? -ne 0 ]; then
