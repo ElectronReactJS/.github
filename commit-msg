@@ -110,6 +110,15 @@ fi
 
 # Extract the commit message from the API response
 DESCRIPTION=$(echo "$API_FROM_DIFF_OUTPUT_RESPONSE" | jq -r '.choices[0].message.content')
+# Check if jp command was successful
+if [ $? -ne 0 ]; then
+    echo "Error: JP parsing failed."
+    echo "Reason: The jp command did not execute successfully."
+    echo "Developer Fix: If you believe this is a bug, please contribute by opening an issue on the GitHub repository."
+    echo "Support: If you have a support contract, please contact support with error code 8."
+    echo "Community Help: For community assistance, post your issue on Stack Overflow with the tag 'auto-commit-msg'."
+    exit 8
+fi
 
 # Define system context with specific instructions for emoji usage and commit message format
 OPENAI_SYSTEM_CONTENT="Format the commit message with maximun of 50 characters, based on the following description: ${DESCRIPTION}"
