@@ -28,8 +28,8 @@ fi
 
 # Check for files to translate 
 FILE_NAME=$(basename "$INPUT_FILE")
-if [[ ! "$FILE_NAME" =~ ^PTBR_ ]]; then
-    echo "Warning: The INPUT_FILE $INPUT_FILE is not suitable for translation in this bash file."
+if [[ "$FILE_NAME" =~ ^PTBR_ ]]; then
+    echo "Warning: The FILE_NAME $FILE_NAME is not suitable for translation in this bash file."
     echo "User Task: Update only files written in English."
     exit 0
 fi
