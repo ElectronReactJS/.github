@@ -26,6 +26,13 @@ if [ -z "$INPUT_FILE" ]; then
     exit 7
 fi
 
+# Check for files to translate 
+if [ "$INPUT_FILE" != PTBR_* ]; then
+    echo "Warning: The INPUT_FILE is not sutable for translation in this bash file."
+    echo "User Task: Update this bash file with the missing variables."
+    exit 0
+fi
+
 # Check for curl
 if ! command -v curl &> /dev/null; then
   echo "Error: curl is not installed. Reason: The script requires curl for making API calls."
