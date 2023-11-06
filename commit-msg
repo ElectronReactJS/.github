@@ -112,45 +112,43 @@ fi
 DESCRIPTION=$(echo "$API_FROM_DIFF_OUTPUT_RESPONSE" | jq -r '.choices[0].message.content')
 
 # Define system context with specific instructions for emoji usage and commit message format
-OPENAI_SYSTEM_CONTENT="Format the commit message to follow Conventional Commits and Semantic Versioning. Start the header with an emoji that matches the commit type. The header must include a type, scope (optional), and a short description, followed by a body and a footer if necessary. Wrap lines at 100 characters."
+OPENAI_SYSTEM_CONTENT="Format the commit message to follow conventions, for expressing the changes shortely, based on the user inputed description"
 
 # Define user task with clear instructions on commit message structure and emoji inclusion
-OPENAI_USER_CONTENT="Create a commit message with the following structure and details: \
-- Header with type, then a (scope emoji) between parenteses, then a double point ':', then a space and finally, the subject. \
-  1) The header structure: <TYPE> (<SCOPE> 🔍): <SUBJECT> \
-  2) The header example: git commit -m 'MINOR(🎨 style): footer size increased'.  \
-  3) The header must start with 'type' followed by the scope and the emoji then followed by double point ':'. \
-- The type can be (MAJOR|MINOR|PATCH) depending the changes. \
+OPENAI_USER_CONTENT="Create a commit message with the following structure <TYPE> (<SCOPE> <EMOJI>): <SUBJECT> \
+- The <TYPE>, then a (<SCOPE> <EMOJI>) between parenteses, then a double point ':', then a space and finally, the subject. \
+  * Example as it is manually: git commit -m 'MINOR(🎨 style): footer size increased'.  \
+- The <TYPE> can be (MAJOR|MINOR|PATCH) following the Semantic Versioning Specification (SemVer). \
   1) MAJOR version when you make incompatible API changes. \
   2) MINOR version when you add functionality in a backward compatible manner. \
   3) PATCH version when you make backward compatible bug fixes. \
-- The scope must including a name followed an emoji, arrounded by parenteses. Ex.: (fix 🐛). \
-  1) build 🔨 (hammer): Changes that affect the build system or external dependencies. \
-  2) ci 🤖 (robot): Changes to CI configuration files and scripts. \
-  3) docs 📚 (books): Documentation only changes. \
-  4) feat ✨ (sparkles): A new feature. \
-  5) fix 🐛 (bug): A bug fix. \
-  6) perf 🚀 (rocket): A code change that improves performance. \
-  7) refactor 🧩 (puzzle piece): A code change that neither fixes a bug nor adds a feature. \
-  8) style 🎨 (artist palette): Changes that do not affect the meaning of the code (white-space, formatting, etc). \
-  9) test 🧪 (test tube): Adding missing tests or correcting existing tests. \
-  10) animations 💃 (dancer): Changes related to animations. \
-  11) common 🌐 (globe with meridians): Common code changes that affect multiple parts of the project. \
-  12) compiler 🛠️ (hammer and wrench): Changes to the compiler. \
-  13) compiler-cli 🖥️ (desktop computer): Changes to the CLI for the compiler. \
-  14) core 🧱 (brick): Changes to the core functionality. \
-  15) elements 🔍 (magnifying glass tilted right): Changes to UI elements. \
-  16) forms (pencil): Changes to form handling or form elements. \
-  17) http 🌐 (globe with meridians): Changes related to HTTP protocol handling. \
-  18) language-service 🈳 (empty character box): Improvements or fixes to language services. \
-  19) platform-browser 🌍 (globe showing Europe-Africa): Changes affecting the browser platform. \
-  20) platform-browserdynamic 🌎 (globe showing Americas): Dynamic browser platform changes. \
-  21) platform-server 🖥️ (desktop computer): Changes affecting server-side platform. \
-  21) platform-webworker 👷 (construction worker): Changes related to web workers. \
-  23) platform-webworker-dynamic ⚙️ (gear): Dynamic changes related to web workers. \
-  24) router 🧭 (compass): Changes to the routing system. \
-  25) service-worker 👷‍♂️ (man construction worker): Changes related to service workers. \
-  26) upgrade ⬆️ (upwards button): Changes for upgrading the system or dependencies. \
+- The <SCOPE> must including a name listed below, followed an <EMOJI>, arrounded by parenteses. Example (fix 🐛): \
+  1) build 🔨 hammer Changes that affect the build system or external dependencies. \
+  2) ci 🤖 robot Changes to CI configuration files and scripts. \
+  3) docs 📚 books Documentation only changes. \
+  4) feat ✨ sparkles A new feature. \
+  5) fix 🐛 bug A bug fix. \
+  6) perf 🚀 rocket A code change that improves performance. \
+  7) refactor 🧩 puzzle piece A code change that neither fixes a bug nor adds a feature. \
+  8) style 🎨 artist palette Changes that do not affect the meaning of the code (white-space, formatting, etc). \
+  9) test 🧪 test tube Adding missing tests or correcting existing tests. \
+  10) animations 💃 dancer Changes related to animations. \
+  11) common 🌐 globe with meridians Common code changes that affect multiple parts of the project. \
+  12) compiler 🛠️ hammer and wrench Changes to the compiler. \
+  13) compiler-cli 🖥️ desktop computer Changes to the CLI for the compiler. \
+  14) core 🧱 brick Changes to the core functionality. \
+  15) elements 🔍 magnifying glass tilted right Changes to UI elements. \
+  16) forms pencil Changes to form handling or form elements. \
+  17) http 🌐 globe with meridians Changes related to HTTP protocol handling. \
+  18) language-service 🈳 empty character box Improvements or fixes to language services. \
+  19) platform-browser 🌍 globe showing Europe-Africa Changes affecting the browser platform. \
+  20) platform-browserdynamic 🌎 globe showing Americas Dynamic browser platform changes. \
+  21) platform-server 🖥️ desktop computer Changes affecting server-side platform. \
+  21) platform-webworker 👷 construction worker Changes related to web workers. \
+  23) platform-webworker-dynamic ⚙️ gear Dynamic changes related to web workers. \
+  24) router 🧭 compass Changes to the routing system. \
+  25) service-worker 👷‍♂️ man construction worker Changes related to service workers. \
+  26) upgrade ⬆️ upwards button Changes for upgrading the system or dependencies. \
 - Imperative mood, lowercase subject, without ending period." 
 
 # Prepare the JSON payload using jq, incorporating the DESCRIPTION
