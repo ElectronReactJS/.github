@@ -1,6 +1,6 @@
 # Bem-vindo ao ElectronReactJS
 
-![profile/electron-react-logo.png](profile/electron-react-logo.png)
+![profile/electron-react-logo.png](profile/electron-react-logo.png) Agora vai
 
 Bem-vindo à organização oficial do GitHub para a comunidade ElectronReactJS. Somos um ponto de referência dedicado a projetos de código aberto que combinam o poder do [Electron](https://www.electronjs.org/) e do [React](https://reactjs.org/). Nossa missão é promover um ambiente de colaboração onde os desenvolvedores possam compartilhar, contribuir e construir aplicações desktop superiores utilizando tecnologias web.
 
