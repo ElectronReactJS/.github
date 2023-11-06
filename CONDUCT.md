@@ -50,4 +50,4 @@ By following these guidelines, we foster a culture of excellence and collaborati
 
 ---
 
-- Author: Ricardo Malnati
+  Author: Ricardo Malnati

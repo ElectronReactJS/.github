@@ -40,4 +40,4 @@ Thank you for visiting the ElectronReactJS organization!
 
 ---
 
-- Author: Ricardo Malnati
+  Author: Ricardo Malnati
