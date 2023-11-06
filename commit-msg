@@ -112,10 +112,10 @@ fi
 DESCRIPTION_4096_SUGGESTION=$(echo "$API_FROM_DIFF_OUTPUT_RESPONSE" | jq -r '.choices[0].message.content')
 
 # Define system context
-OPENAI_SYSTEM_CONTENT="The AI is requested to analyze the description output and create a commit message following the Conventional Commits specification and Semantic Versioning. It should categorize the changes and prepend the appropriate emojis based on the type of change: 🐛 for fixes, ✨ for features, 💥 for breaking changes, etc. The commit message should be structured with a header, body, and footer."
+OPENAI_SYSTEM_CONTENT="The AI should format commit messages according to the Conventional Commits specification and Semantic Versioning. It should identify the type of change (fix, feat, BREAKING CHANGE, etc.), prepend the appropriate emoji, and ensure the message includes a header, body, and footer as required. The formatted message should adhere to the commit message guidelines for readability and structure."
 
 # Define user task with the placeholder for the description output
-OPENAI_USER_CONTENT="Analyze the provided description output and format a commit message. The message should include an emoji based on the commit type, a concise subject line using imperative mood, a detailed body if needed, and a footer with references or breaking change notices. Ensure the message follows the conventions of less than 100 characters per line, and includes a type, scope, and description for the changes made."
+OPENAI_USER_CONTENT="Format the provided commit message. Prepend the correct emoji based on the commit type: 🐛 for 'fix:', ✨ for 'feat:', 💥 for 'BREAKING CHANGE:', 🏗️ for 'build:', 🤖 for 'ci:', 📚 for 'docs:', 🎨 for 'style:', 🚀 for 'perf:', 🔨 for 'refactor:', and 🧪 for 'test:'. The commit message should follow the structure: <type>(<scope>): <subject> with a mandatory header and optional scope and footer. Ensure the message is within 100 characters per line."
 
 # Prepare the JSON payload using jq, incorporating the DESCRIPTION
 JSON_DESCRIPTION_PAYLOAD=$(jq -n \
