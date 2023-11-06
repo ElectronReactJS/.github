@@ -99,9 +99,7 @@ REFERENCE="[Tradução para Português 🇧🇷]($TRANSLATED_FILE)"
 # Check if the reference already exists
 if ! grep -q "$REFERENCE" "$INPUT_FILE"; then
     # Reference doesn't exist, insert at the first line
-    sed -i '' "1i\\
-$REFERENCE\\
-" "$INPUT_FILE"
+    awk -v ref="$REFERENCE" 'BEGIN {print ref} {print}' "$INPUT_FILE" > temp_file && mv temp_file "$INPUT_FILE"
 fi
 
 echo -e "$TRANSLATED_CONTENT" > "$TRANSLATED_FILE"
