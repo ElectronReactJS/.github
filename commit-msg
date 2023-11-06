@@ -151,9 +151,7 @@ OPENAI_USER_CONTENT="Create a commit message with the following structure and de
   24) router 🧭 (compass): Changes to the routing system. \
   25) service-worker 👷‍♂️ (man construction worker): Changes related to service workers. \
   26) upgrade ⬆️ (upwards button): Changes for upgrading the system or dependencies. \
-- Imperative mood, lowercase subject, without ending period. \
-- Body explaining the 'why' and 'what' of the changes: ${DESCRIPTION} \
-- Footer with BREAKING CHANGE notice or issue references." 
+- Imperative mood, lowercase subject, without ending period." 
 
 # Prepare the JSON payload using jq, incorporating the DESCRIPTION
 JSON_DESCRIPTION_PAYLOAD=$(jq -n \
@@ -194,6 +192,7 @@ fi
 
 # Update the commit message
 echo -e "$SUGGESTION" > "commit-message.txt"
+echo -e "$DESCRIPTION" >> "commit-message.txt"
 git commit -F "commit-message.txt"
 rm -f "commit-message.txt"
 git fetch && git pull
