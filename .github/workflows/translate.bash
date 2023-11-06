@@ -93,15 +93,17 @@ if [ $? -ne 0 ]; then
     exit 9
 fi
 
-TRANSLATED_FILE="$(dirname $INPUT_FILE)/PTBR_$(basename $INPUT_FILE)"
+BASE_DIR=$(dirname "$INPUT_FILE") 
+TRANSLATED_FILE="$BASE_DIR/PTBR_$(basename "$INPUT_FILE")" 
 TEXT_REFERENCE="Tradução para Português 🇧🇷"
 REFERENCE="[$TEXT_REFERENCE]($TRANSLATED_FILE)"
 
 # Check if the text reference already exists to avoid inserting the link again
 if ! grep -q "$TEXT_REFERENCE" "$INPUT_FILE"; then
-    # Reference doesn't exist, insert at the first line
+    # Reference doesn't exist, prepend at the first line of the original file
     awk -v ref="$REFERENCE" 'NR==1 && !/^'"$REFERENCE"'$/ {print ref} {print}' "$INPUT_FILE" > temp_file && mv temp_file "$INPUT_FILE"
 fi
+
 
 echo -e "$TRANSLATED_CONTENT" > "$TRANSLATED_FILE"
 # Check if the last command was successful
