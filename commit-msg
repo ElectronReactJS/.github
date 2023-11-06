@@ -152,9 +152,8 @@ OPENAI_USER_CONTENT="Create a commit message with the following structure and de
   25) service-worker 👷‍♂️ (man construction worker): Changes related to service workers. \
   26) upgrade ⬆️ (upwards button): Changes for upgrading the system or dependencies. \
 - Imperative mood, lowercase subject, without ending period. \
-- Body explaining the 'why' and 'what' of the changes. \
-- Footer with BREAKING CHANGE notice or issue references. \
-Message example: PATCH (router 🧭): Update user profile routing logic" 
+- Body explaining the 'why' and 'what' of the changes: ${DESCRIPTION} \
+- Footer with BREAKING CHANGE notice or issue references." 
 
 # Prepare the JSON payload using jq, incorporating the DESCRIPTION
 JSON_DESCRIPTION_PAYLOAD=$(jq -n \
