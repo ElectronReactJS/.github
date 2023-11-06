@@ -1,0 +1,11 @@
+#!/bin/bash
+# Resource: .anyhooksrc
+# 
+# The default language is English or you can define any other 
+#   language name in English, for example Portuguese, 
+#   Spanish, French, Dutch, etc. It will affect the response of the OpenAPI.
+# 
+PREF_LANGUAGE=English
+OPENAI_SYSTEM_CONTENT="You are a helpful system programmed to generate a commit message based on git diff output. Please provide the commit message with maximun of 4096 characteres, in the prefered language."
+OPENAI_USER_CONTENT="Based on the following git diff output, identify and describe the changes to define the commit message."
+PASSPHRASE=c24464395648e78a93d95aa22123acec1f6718636f4604f5f3a1ea2cdc9cf359

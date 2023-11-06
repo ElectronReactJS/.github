@@ -1,0 +1,130 @@
+#!/usr/bin/env bash
+# Script: hooks/commit-msg
+# Author: Ricardo Malnati
+# Creation Date: 2023-10-15
+# Description: Analyzes the commit content and suggests a semantic versioning message. Supports user 
+#               and project-level preferences for language and content.
+# Dependencies: curl, jq, openssl
+
+# Get the project directory using Git setup info
+PROJECT_DIR=$(git rev-parse --show-toplevel)
+
+# OS-agnostic home directory
+HOME_DIR=$(eval echo ~$USER)
+
+# Configuration and encryption file paths
+CONFIG_FILE_PROJECT="$PROJECT_DIR/.anyhooksrc"
+CONFIG_FILE_HOME="$HOME_DIR/.anyhooksrc"
+ENCRYPT_FILE_PROJECT="$PROJECT_DIR/.anyhooksopenai.enc"
+ENCRYPT_FILE_HOME="$HOME_DIR/.anyhooksopenai.enc"
+
+# Check for configuration files, prioritize project directory
+if [ -f $CONFIG_FILE_PROJECT ]; then
+    source $CONFIG_FILE_PROJECT
+elif [ -f $CONFIG_FILE_HOME ]; then
+    source $CONFIG_FILE_HOME
+else
+    echo "Error: Configuration file not found."
+    echo "Reason: The script requires a configuration file either in the project directory or the home directory."
+    exit 1
+fi
+
+# Check for encrypted files, prioritize project directory
+ENCRYPT_FILE=""
+if [ -f $ENCRYPT_FILE_PROJECT ]; then
+    ENCRYPT_FILE=$ENCRYPT_FILE_PROJECT
+elif [ -f $ENCRYPT_FILE_HOME ]; then
+    ENCRYPT_FILE=$ENCRYPT_FILE_HOME
+else
+    echo "Error: Encrypted API key file not found."
+    echo "Reason: The script requires an encrypted API key file either in the project directory or the home directory."
+    exit 2
+fi
+
+# Check for curl
+if ! command -v curl &> /dev/null; then
+  echo "Error: curl is not installed. Reason: The script requires curl for making API calls."
+  echo "Developer Fix: Install curl via Homebrew by running 'brew install curl'."
+  exit 3
+fi
+
+# Check for jq
+if ! command -v jq &> /dev/null; then
+  echo "Error: jq is not installed. Reason: The script requires jq for JSON parsing."
+  echo "Developer Fix: Install jq via Homebrew by running 'brew install jq'."
+  exit 4
+fi
+
+# Check for openssl
+if ! command -v openssl &> /dev/null; then
+  echo "Error: openssl is not installed. Reason: The script requires openssl for encryption and decryption."
+  echo "Developer Fix: Install openssl via Homebrew by running 'brew install openssl'."
+  exit 5
+fi
+
+# Source the variable
+CONFIG_FILE="./.anyhooksrc"
+if [ ! -f $CONFIG_FILE ]; then
+    echo "Error: Configuration file $CONFIG_FILE not found."
+    echo "Reason: The script requires this file for sourcing variables."
+    echo "User Task: Make sure $CONFIG_FILE exists and is accessible."
+    exit 6
+fi
+
+# Check for required files and variables
+if [ ! -f $ENCRYPT_FILE ] || [ -z "$PASSPHRASE" ] || [ -z "$PREF_LANGUAGE" ] || [ -z "$OPENAI_SYSTEM_CONTENT" ] || [ -z "$OPENAI_USER_CONTENT" ]; then
+    echo "Error: Required variables not set in $CONFIG_FILE."
+    echo "Reason: Missing PASSPHRASE, PREF_LANGUAGE, OPENAI_SYSTEM_CONTENT, or OPENAI_USER_CONTENT."
+    echo "User Task: Update $CONFIG_FILE with the missing variables."
+    exit 7
+fi
+
+# Decrypt API Key
+API_KEY=$(echo $PASSPHRASE | openssl enc -aes-256-cbc -d -pbkdf2 -in $ENCRYPT_FILE -pass stdin)
+
+$(git add .)
+DIFF_OUTPUT=$(git diff --cached)
+
+# Prepare the JSON payload using jq
+JSON_DIFF_OUTPUT_PAYLOAD=$(jq -n \
+                  --arg model "gpt-3.5-turbo-16k" \
+                  --arg sys_content "$OPENAI_SYSTEM_CONTENT The user speaks $PREF_LANGUAGE." \
+                  --arg user_content "$OPENAI_USER_CONTENT: $DIFF_OUTPUT" \
+                  '{model: $model, messages: [{role: "system", content: $sys_content}, {role: "user", content: $user_content}]}')
+
+# Make an API call to ChatGPT for analysis
+API_FROM_DIFF_OUTPUT_RESPONSE=$(curl -s -H "Authorization: Bearer $API_KEY" \
+    -H "Content-Type: application/json" \
+    -d "$JSON_DIFF_OUTPUT_PAYLOAD" \
+    "https://api.openai.com/v1/chat/completions")
+
+# Check if curl command was successful
+if [ $? -ne 0 ]; then
+    echo "Error: API call to ChatGPT failed."
+    echo "Reason: The curl command did not execute successfully."
+    echo "Developer Fix: If you believe this is a bug, please contribute by opening an issue on the GitHub repository."
+    echo "Support: If you have a support contract, please contact support with error code 8."
+    echo "Community Help: For community assistance, post your issue on Stack Overflow with the tag 'auto-commit-msg'."
+    exit 8
+fi
+
+# Extract the commit message from the API response
+DESCRIPTON_4096_SUGGESTION=$(echo "$API_FROM_DIFF_OUTPUT_RESPONSE" | jq -r '.choices[0].message.content')
+
+# Check if jq command was successful
+if [ $? -ne 0 ]; then
+    echo "Error: Failed to parse API response."
+    echo "Reason: The jq command did not execute successfully."
+    echo "Developer Fix: If you believe this is a bug, please contribute by opening an issue on the GitHub repository."
+    echo "Support: If you have a support contract, please contact support with error code 9."
+    echo "Community Help: For community assistance, post your issue on Stack Overflow with the tag 'auto-commit-msg'."
+    exit 9
+fi
+
+# Update the commit message
+echo $DESCRIPTON_4096_SUGGESTION > "commit-message.txt"
+git commit -F "commit-message.txt"
+rm -f "commit-message.txt"
+git fetch && git pull
+
+exit 0
