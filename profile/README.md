@@ -48,5 +48,7 @@ Stay informed with the latest from ElectronReactJS:
 
 We are excited to have you join our community, and we can't wait to see what we will build together in the realm of desktop applications.
 
+---
+
 Author: Ricardo Malnati
 E-mail: airflow.relay.03@icloud.com
