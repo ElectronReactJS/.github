@@ -18,7 +18,7 @@ if [ -z "$API_KEY" ]; then
 fi
 
 INPUT_FILE="$2"
-echo "Received: $INPUT_FILE"
+echo "Received to translate: $INPUT_FILE"
 # Check for required files and variables
 if [ -z "$INPUT_FILE" ]; then
     echo "Error: Required variable INPUT_FILE is not set in this bash file."
@@ -29,7 +29,7 @@ fi
 # Check for files to translate 
 if [ "$INPUT_FILE" != PTBR_* ]; then
     echo "Warning: The INPUT_FILE is not sutable for translation in this bash file."
-    echo "User Task: Update this bash file with the missing variables."
+    echo "User Task: Update only files written in English."
     exit 0
 fi
 
