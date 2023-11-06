@@ -54,4 +54,4 @@ We are excited to have you join our community, and we can't wait to see what we 
 
 ---
 
-- Author: Ricardo Malnati
+  Author: Ricardo Malnati
