@@ -173,7 +173,7 @@ if [ $? -ne 0 ]; then
 fi
 
 # Update the commit message
-echo -e "${TITLE}\n" > "commit-message.txt"
+echo -e "${TITLE} \n" > "commit-message.txt"
 echo -e "$BODY" >> "commit-message.txt"
 git commit -F "commit-message.txt"
 rm -f "commit-message.txt"
