@@ -2,7 +2,7 @@
 [Tradução para Português 🇧🇷](profile/PTBR_README.md)
 # Welcome to ElectronReactJS
 
-![profile/electron-react-logo.png](profile/electron-react-logo.png)
+![images/electron-react-logo.png](images/electron-react-logo.png)
 
 Welcome to the official GitHub organization for the ElectronReactJS community. We are a dedicated hub for open-source projects that synergize the power of [Electron](https://www.electronjs.org/) and [React](https://reactjs.org/). Our mission is to foster a collaborative environment where developers can share, contribute, and build superior desktop applications using web technologies.
 
