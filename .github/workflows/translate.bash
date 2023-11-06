@@ -93,10 +93,21 @@ if [ $? -ne 0 ]; then
     exit 9
 fi
 
-echo -e "$TRANSLATED_CONTENT" > "$(dirname $INPUT_FILE)/PTBR_$(basename $INPUT_FILE)"
+TRANSLATED_FILE="$(dirname $INPUT_FILE)/PTBR_$(basename $INPUT_FILE)"
+REFERENCE="[Tradução para Português 🇧🇷]($TRANSLATED_FILE)"
+
+# Check if the reference already exists
+if ! grep -q "$REFERENCE" "$INPUT_FILE"; then
+    # Reference doesn't exist, insert at the first line
+    sed -i '' "1i\\
+$REFERENCE\\
+" "$INPUT_FILE"
+fi
+
+echo -e "$TRANSLATED_CONTENT" > "$TRANSLATED_FILE"
 # Check if the last command was successful
 if [ $? -ne 0 ]; then
-    echo "Error: Failed to write $(dirname $INPUT_FILE)/PTBR_$(basename $INPUT_FILE)."
+    echo "Error: Failed to write $TRANSLATED_FILE ."
     echo "Developer Fix: If you believe this is a bug, please contribute by opening an issue on the GitHub repository."
     echo "Support: If you have a support contract, please contact support with error code 9."
     echo "Community Help: For community assistance, post your issue on Stack Overflow with the tag 'translate.bash'."
@@ -113,7 +124,7 @@ if [ $? -ne 0 ]; then
     exit 9
 fi
 
-git commit -m "feat: Added or updated $(dirname $INPUT_FILE)/PTBR_$(basename $INPUT_FILE)"
+git commit -m "feat: Translations"
 # Check if the last command was successful
 if [ $? -ne 0 ]; then
     echo "Error: Failed to commit $(dirname $INPUT_FILE)/PTBR_$(basename $INPUT_FILE)."
