@@ -50,5 +50,5 @@ We are excited to have you join our community, and we can't wait to see what we 
 
 ---
 
-Author: Ricardo Malnati
-E-mail: airflow.relay.03@icloud.com
+- Author: Ricardo Malnati
+- E-mail: airflow.relay.03@icloud.com
