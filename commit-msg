@@ -122,7 +122,7 @@ OPENAI_USER_CONTENT="Create a commit message with the following structure and de
 - Body explaining the 'why' and 'what' of the changes.
 - Footer with BREAKING CHANGE notice or issue references.
 Message example: feat(parser): add array parsing support
-Consider the following changes for formatting: $DESCRIPTION"
+Consider the following changes for formatting:"
 
 # Prepare the JSON payload using jq, incorporating the DESCRIPTION
 JSON_DESCRIPTION_PAYLOAD=$(jq -n \
