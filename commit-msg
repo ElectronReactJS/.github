@@ -112,7 +112,7 @@ fi
 DESCRIPTION=$(echo "$API_FROM_DIFF_OUTPUT_RESPONSE" | jq -r '.choices[0].message.content')
 
 # Define system context with specific instructions for emoji usage and commit message format
-OPENAI_SYSTEM_CONTENT="Format the commit message with maximun of 50 characters, based on: $DESCRIPTION."
+OPENAI_SYSTEM_CONTENT="Format the commit message with maximun of 50 characters, based on the following description: ${DESCRIPTION}"
 
 # Define user task with clear instructions on commit message structure and emoji inclusion
 OPENAI_USER_CONTENT="Create a commit message with the following structure <TYPE> (<SCOPE> <EMOJI>): <SUBJECT> \
